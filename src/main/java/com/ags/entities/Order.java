@@ -81,6 +81,37 @@ public class Order implements Serializable {
 		return moment;
 	}
 
+
+	public void setMoment(Instant moment) {
+		this.moment = moment;
+	}
+
+	public User getClient() {
+		return client;
+	}
+
+	public void setClient(User client) {
+		this.client = client;
+	}
+	
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOf(this.orderStatus);
+	}
+	
+	public void setOrderStatus(OrderStatus orderStatus) {
+		if (orderStatus != null) {
+			this.orderStatus = orderStatus.getCode();
+		}
+	}
+	
+	public Double getSubTotal() {
+		Double soma = 0.00;
+		for (OrderItem x: items) {
+			soma = soma + x.getSubTotal();
+		}
+		return soma;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -104,28 +135,6 @@ public class Order implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	public void setMoment(Instant moment) {
-		this.moment = moment;
-	}
-
-	public User getClient() {
-		return client;
-	}
-
-	public void setClient(User client) {
-		this.client = client;
-	}
-	
-	public OrderStatus getOrderStatus() {
-		return OrderStatus.valueOf(this.orderStatus);
-	}
-	
-	public void setOrderStatus(OrderStatus orderStatus) {
-		if (orderStatus != null) {
-			this.orderStatus = orderStatus.getCode();
-		}
 	}
 	
 }
